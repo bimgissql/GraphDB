@@ -1,0 +1,26 @@
+1. Check firewall state:
+=====================================================
+
+firewall-cmd --state
+
+2. Update yum packages
+=====================================================
+
+yum update -y
+
+3. Install Neo4j
+=====================================================
+
+yum install neo4j
+cd /opt/neo4j-community-3.0.6/bin/
+./neo4j start
+
+4. Start Neo4j
+=====================================================
+
+systemctl start neo4j
+
+5. Set automatic start Neo4j on boot
+=====================================================
+
+systemctl enable neo4j
