@@ -8,19 +8,46 @@ firewall-cmd --state
 
 yum update -y
 
-3. Install Neo4j
+3. Add Neo4j repository
 =====================================================
 
-yum install neo4j
-cd /opt/neo4j-community-3.0.6/bin/
+rpm --import http://debian.neo4j.org/neotechnology.gpg.key
+
+Create file:   /etc/yum.repos.d/neo4j.repo
+
+and add following lines to it:
+------------------------------------
+[neo4j]
+name=Neo4j RPM Repository
+baseurl=http://yum.neo4j.org/stable
+enabled=1
+gpgcheck=1
+------------------------------------
+
+
+4. Install Neo4j
+=====================================================
+
+yum install neo4j-3.4.1
+
+
+5. Start Neo4j
+=====================================================
+
+cd /bin/
 ./neo4j start
-
-4. Start Neo4j
-=====================================================
-
 systemctl start neo4j
 
-5. Set automatic start Neo4j on boot
+6. Set automatic start Neo4j on boot
 =====================================================
 
 systemctl enable neo4j
+
+
+7. Configure firewall
+=====================================================
+
+firewall-cmd --get-active-zones
+firewall-cmd --zone=public --add-port=7474/tcp --add-port=7473/tcp --add-port=7687/tcp --permanent
+firewall-cmd --reload
+firewall-cmd --list-ports
